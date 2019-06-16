@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserTradeService {
@@ -32,13 +31,21 @@ public class UserTradeService {
         }
     }
 
+    public List<User> getAllUsers(){
+        return userTradeRepository.findAll();
+    }
 
     public List<Trade> getTradesByUserId(String userId){
         User user = userTradeRepository.findByUserId(userId);
         return user.getTrades();
     }
 
-    public List<User> getAllUsers(){
-        return userTradeRepository.findAll();
+    public List<Trade> getTradesByFundNumber(String fundNumber){
+        User user = userTradeRepository.findByFundNumber(fundNumber);
+        return user.getTrades();
+    }
+
+    public void deleteUser (String userId) {
+        userTradeRepository.deleteById(userId);
     }
 }

@@ -4,12 +4,10 @@ import io.tradingservice.trading.models.Trade;
 import io.tradingservice.trading.models.User;
 import io.tradingservice.trading.services.UserTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorOrder;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -33,7 +31,15 @@ public class PurchaseController {
     @GET
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("/present/{userId}")
+    @Path("/users")
+    public List<User> getTradesByUser(){
+        return userTradeService.getAllUsers();
+    }
+
+    @GET
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/userId/{userId}")
     public List<Trade> getTradesByUser(@PathParam("userId") String userId){
         return userTradeService.getTradesByUserId(userId);
     }
@@ -41,11 +47,20 @@ public class PurchaseController {
     @GET
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("/users")
-    public List<User> getTradesByUser(){
-        return userTradeService.getAllUsers();
+    @Path("/fundNumber/{fundNumber}")
+    public List<Trade> getTradesByFund(@PathParam("fundNumber") String fundNumber){
+        return userTradeService.getTradesByFundNumber(fundNumber);
     }
 
+    @DELETE
+    @Path("/delete/{userId}")
+    public Response deleteUser(@PathParam("userId") String userId) {
+        if (userId != null) {
+            userTradeService.deleteUser(userId);
+            return Response.status(200).build();
+        }
+        return Response.status(404).build();
 
+    }
 
 }
