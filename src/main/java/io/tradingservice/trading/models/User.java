@@ -1,5 +1,10 @@
 package io.tradingservice.trading.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.gson.Gson;
+import org.immutables.mongo.Mongo;
+import org.immutables.value.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,33 +13,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "users")
-public class User {
+@Value.Immutable
+@Gson.TypeAdapters
+@Mongo.Repository(collection = "users")
+@JsonSerialize(as = ImmutableUser.class)
+@JsonDeserialize(as = ImmutableUser.class)
+public abstract class User {
 
-    @Id
-    private String userId;
+    @Mongo.Id
+    public abstract String userId();
 
-    private List<Trade> trades;
+    public abstract List<Trade> trades();
 
 
-    public User(String userId, List<Trade> trades) {
-        this.userId = userId;
-        this.trades = trades;
-    }
 
-    public String getUserId() {
-        return userId;
-    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public List<Trade> getTrades() {
-        return trades;
-    }
-
-    public void setTrades(List<Trade> trades) {
-        this.trades = trades;
-    }
 }
+
