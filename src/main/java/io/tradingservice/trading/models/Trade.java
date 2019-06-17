@@ -1,5 +1,8 @@
 package io.tradingservice.trading.models;
 
+//import org.immutables.value.Value;
+
+//@Value.Immutable
 public class Trade {
 
     // @Id
@@ -14,6 +17,7 @@ public class Trade {
     private int setCycle;
     private float sAndPRating;
     private float moodysRating;
+
 
     public Trade(float avgNav, String status, float quantity, String fundNumber, String fundName,
                  String invManager, int setCycle, float sAndPRating, float moodysRating) {

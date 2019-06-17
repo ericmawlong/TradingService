@@ -1,5 +1,6 @@
 package io.tradingservice.trading.models;
 
+//import org.immutables.value.Value;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
+//@Value.Immutable
 public class User {
 
     @Id
