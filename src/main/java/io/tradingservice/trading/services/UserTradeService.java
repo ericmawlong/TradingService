@@ -14,17 +14,30 @@ public class UserTradeService {
 
     @Autowired
     private UserTradeRepository userTradeRepository;
+    private Trade newtrade;
 
-    public void addTrade(String userInput, Trade trade){
-        if (!userTradeRepository.existsById(userInput)){
+    public void addTrade(String userId, Trade trade){
+        if (!userTradeRepository.existsById(userId)){
             List<Trade> trades = new ArrayList<>();
             trades.add(trade);
-            User user = new User(userInput, trades);
+            User user = new User(userId, trades);
             userTradeRepository.save(user);
         }
-        else if (userTradeRepository.existsById(userInput)){
-            User user = userTradeRepository.findByUserId(userInput);
+        else if (userTradeRepository.existsById(userId)){
+            User user = userTradeRepository.findByUserId(userId);
             List<Trade> trades = user.getTrades();
+            Trade trade1 = new Trade();
+            trade1.getFundNumber();
+            if (trade1.getFundNumber()== trade.getFundNumber()){
+                if (trade1.getStatus()== "purchase")
+                    trade.setQuantity(trade.getQuantity()+trade1.getQuantity());
+
+                else if (trade1.getStatus() == "sell") {
+                    if(trade.getQuantity()>trade1.getQuantity())
+                        trade.setQuantity(trade.getQuantity()-trade1.getQuantity());
+                }
+
+            }
             trades.add(trade);
             user.setTrades(trades);
             userTradeRepository.save(user);
@@ -40,12 +53,19 @@ public class UserTradeService {
         return user.getTrades();
     }
 
-    public List<Trade> getTradesByFundNumber(String fundNumber){
-        User user = userTradeRepository.findByFundNumber(fundNumber);
+    /* not working
+    public List<Trade> getTradesByFundNumber(String userId, String fundNumber){
+        User user = userTradeRepository.findByUserId(userId).findByFundNumber(fundNumber);
         return user.getTrades();
     }
+
+    public void deleteFund (String userId, String fundNumber) {
+        User user = userTradeRepository.findByUserId(userId);
+        user.getFundNumber(fundNumber);
+    } */
 
     public void deleteUser (String userId) {
         userTradeRepository.deleteById(userId);
     }
+
 }

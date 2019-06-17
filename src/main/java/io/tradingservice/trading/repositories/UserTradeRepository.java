@@ -1,6 +1,5 @@
 package io.tradingservice.trading.repositories;
 
-import io.tradingservice.trading.models.Trade;
 import io.tradingservice.trading.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserTradeRepository extends MongoRepository<User, String> {
     User findByUserId(String userId);
-    User findByFundNumber(String fundNumber);
 }

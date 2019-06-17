@@ -26,7 +26,7 @@ public class PurchaseController {
     @Path("/create/{userId}")
     public Response addTrade(@PathParam("userId") String userId, Trade trade) throws URISyntaxException{
         userTradeService.addTrade(userId, trade);
-        return Response.status(201).entity("Purchased requested trade")build();
+        return Response.status(201).entity("Purchased requested trade").build();
     }
 
     @GET
@@ -38,17 +38,19 @@ public class PurchaseController {
 
     @GET
     @Produces("application/json")
-    @Path("/userId/{userId}")
+    @Path("/get/{userId}")
+
     public List<Trade> getTradesByUser(@PathParam("userId") String userId) throws URISyntaxException{
         return userTradeService.getTradesByUserId(userId);
     }
 
+    /*not working
     @GET
     @Produces("application/json")
-    @Path("/fundNumber/{fundNumber}")
+    @Path("/get/{userId}/{fundNumber}")
     public List<Trade> getTradesByFund(@PathParam("fundNumber") String fundNumber) throws URISyntaxException{
         return userTradeService.getTradesByFundNumber(fundNumber);
-    }
+    } */
 
     @DELETE
     @Path("/delete/{userId}")
@@ -58,7 +60,22 @@ public class PurchaseController {
             return Response.status(200).entity("Sold requested trade").build();
         }
         return Response.status(404).build();
-
     }
+
+    /*@PUT
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("/update/{userId}")
+    public Response updateUser(@PathParam("userId") String userId, Trade trade) throws URISyntaxException {
+        userTradeService.modifyTrade(userId, trade);
+        return Response.status(201).entity("Purchased requested trade").build();
+    }
+        if (userId != null) {
+            userTradeService.deleteUser(userId);
+            return Response.status(200).entity("Sold requested trade").build();
+        }
+        return Response.status(404).build();
+
+    }*/
 
 }
