@@ -21,14 +21,16 @@ public class PurchaseController {
     @Autowired
     private UserTradeService userTradeService;
 
+    //create new user
     @POST
     @Consumes("application/json")
     @Path("/create/{userId}")
     public Response addTrade(@PathParam("userId") String userId, Trade trade) throws URISyntaxException{
         userTradeService.addTrade(userId, trade);
-        return Response.status(201).entity("Purchased requested trade").build();
+        return Response.status(201).entity("Requested trade completed").build();
     }
 
+    //get all users
     @GET
     @Produces("application/json")
     @Path("/users")
@@ -36,6 +38,7 @@ public class PurchaseController {
         return userTradeService.getAllUsers();
     }
 
+    //get user by userId
     @GET
     @Produces("application/json")
     @Path("/get/{userId}")
@@ -44,38 +47,24 @@ public class PurchaseController {
         return userTradeService.getTradesByUserId(userId);
     }
 
-    /*not working
+    /* get funds by fundNumber
     @GET
     @Produces("application/json")
     @Path("/get/{userId}/{fundNumber}")
-    public List<Trade> getTradesByFund(@PathParam("fundNumber") String fundNumber) throws URISyntaxException{
-        return userTradeService.getTradesByFundNumber(fundNumber);
+    public List<Trade> getTradesByFund(@PathParam("userId") String userId,
+                                       @PathParam("fundNumber") String fundNumber) throws URISyntaxException{
+        return userTradeService.getTradesByFundNumber(userId, fundNumber);
     } */
 
+    //delete all trades of user
     @DELETE
     @Path("/delete/{userId}")
     public Response deleteUser(@PathParam("userId") String userId) throws URISyntaxException {
         if (userId != null) {
             userTradeService.deleteUser(userId);
-            return Response.status(200).entity("Sold requested trade").build();
+            return Response.status(200).entity("Sold all trades").build();
         }
         return Response.status(404).build();
     }
-
-    /*@PUT
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Path("/update/{userId}")
-    public Response updateUser(@PathParam("userId") String userId, Trade trade) throws URISyntaxException {
-        userTradeService.modifyTrade(userId, trade);
-        return Response.status(201).entity("Purchased requested trade").build();
-    }
-        if (userId != null) {
-            userTradeService.deleteUser(userId);
-            return Response.status(200).entity("Sold requested trade").build();
-        }
-        return Response.status(404).build();
-
-    }*/
 
 }

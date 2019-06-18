@@ -15,7 +15,7 @@ public class Trade {
     private float sAndPRating;
     private float moodysRating;
 
-
+    //empty constructor
     public Trade () {
 
     }
