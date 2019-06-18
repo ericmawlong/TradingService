@@ -1,23 +1,21 @@
 package io.tradingservice.trading.models;
 
 //import org.immutables.value.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
 //@Value.Immutable
+
 public class User {
 
     @Id
     private String userId;
 
     private List<Trade> trades;
-
 
     public User(String userId, List<Trade> trades) {
         this.userId = userId;
@@ -39,4 +37,5 @@ public class User {
     public void setTrades(List<Trade> trades) {
         this.trades = trades;
     }
+
 }

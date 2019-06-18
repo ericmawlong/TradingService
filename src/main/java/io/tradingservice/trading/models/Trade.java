@@ -5,9 +5,6 @@ package io.tradingservice.trading.models;
 //@Value.Immutable
 public class Trade {
 
-    // @Id
-    // private Timestamp timeStamp;
-
     private float avgNav;
     private String status;
     private float quantity;
@@ -18,6 +15,10 @@ public class Trade {
     private float sAndPRating;
     private float moodysRating;
 
+    //empty constructor
+    public Trade () {
+
+    }
 
     public Trade(float avgNav, String status, float quantity, String fundNumber, String fundName,
                  String invManager, int setCycle, float sAndPRating, float moodysRating) {
